@@ -4,6 +4,8 @@ from commands.info_commands import get_all_commands_info
 from commands.info_command import get_command_info
 from commands.channels import get_all_channels
 from commands.messages_types import get_messages_types
+from commands.add_channel import add_channel
+from commands.delete_channel import delete_channel
 
 command = ''
 
@@ -54,6 +56,18 @@ async def process_command(current_command):
             if current_token == '/messages_types':
                 if check_messages_types(tokens):
                     await get_messages_types(tokens)
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/add_channel':
+                if check_is_channel_token_correct(tokens):
+                    await add_channel(tokens[1])
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/delete_channel':
+                if check_is_channel_token_correct(tokens):
+                    await delete_channel(tokens[1])
                 else:
                     message = 'Incorrect command'
 
@@ -116,3 +130,10 @@ def check_messages_types(tokens):
         return False
     return True
 
+
+def check_is_channel_token_correct(tokens):
+    if len(tokens) != 2:
+        return False
+    if not check_is_a_simple_token(tokens[1]):
+        return False
+    return True
