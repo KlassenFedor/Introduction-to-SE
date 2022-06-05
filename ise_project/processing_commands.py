@@ -23,6 +23,8 @@ async def process_command(current_command):
     else:
         if tokens[0] in commands_list:
             current_token = tokens[0]
+
+            # info commands
             if current_token == '/info':
                 if check_info(tokens):
                     await get_info()
@@ -53,6 +55,7 @@ async def process_command(current_command):
                 else:
                     message = 'Incorrect command'
 
+            # channel commands
             if current_token == '/messages_types':
                 if check_messages_types(tokens):
                     await get_messages_types(tokens)
@@ -68,6 +71,61 @@ async def process_command(current_command):
             if current_token == '/delete_channel':
                 if check_is_channel_token_correct(tokens):
                     await delete_channel(tokens[1])
+                else:
+                    message = 'Incorrect command'
+
+            # filtration commands
+            if current_token == '/add_ban_word':
+                if check_channel_and_word_with_hashtag():
+                    pass
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/delete_ban_word':
+                if check_channel_and_word_with_hashtag():
+                    pass
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/add_type':
+                if check_channel_and_word():
+                    pass
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/delete_type':
+                if check_channel_and_word():
+                    pass
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/set_defaults':
+                if check_channel_and_word():
+                    pass
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/clear_ban_list':
+                if check_channel_and_word():
+                    pass
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/white_mode':
+                if check_channel_and_word():
+                    pass
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/add_white_word':
+                if check_channel_and_word_with_hashtag():
+                    pass
+                else:
+                    message = 'Incorrect command'
+
+            if current_token == '/delete_white_word':
+                if check_channel_and_word_with_hashtag():
+                    pass
                 else:
                     message = 'Incorrect command'
 
@@ -136,4 +194,12 @@ def check_is_channel_token_correct(tokens):
         return False
     if not check_is_a_simple_token(tokens[1]):
         return False
+    return True
+
+
+def check_channel_and_word():
+    return True
+
+
+def check_channel_and_word_with_hashtag():
     return True
