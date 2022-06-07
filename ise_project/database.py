@@ -9,28 +9,25 @@ class BaseModel(Model):
 
 
 class Feed(BaseModel):
-    feed_id = IntegerField(unique=True)
-    name = TextField()
+    name = TextField(default="")
 
 
 class BanWord(BaseModel):
-    ban_word_id = IntegerField(unique=True)
     word = TextField(unique=True)
-    is_a_hashtag = BooleanField()
+    is_a_hashtag = BooleanField(default=False)
 
 
 class WhiteWord(BaseModel):
-    ban_word_id = IntegerField(unique=True)
     word = TextField(unique=True)
-    is_a_hashtag = BooleanField()
+    is_a_hashtag = BooleanField(default=False)
 
 
 class Channel(BaseModel):
     channel_id = IntegerField(unique=True)
     name = TextField()
-    is_black_list_enabled = BooleanField()
-    is_white_list_enabled = BooleanField()
-    is_messages_types_sort_enabled = BooleanField()
+    is_black_list_enabled = BooleanField(default=False)
+    is_white_list_enabled = BooleanField(default=False)
+    is_messages_types_sort_enabled = BooleanField(default=False)
 
 
 class MessageType(BaseModel):
