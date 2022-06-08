@@ -1,2 +1,2 @@
-async def get_ban_words(channel):
+async def main_command(channel):
     pass

@@ -1,3 +1,3 @@
-async def get_all_commands_info():
+async def main_command():
     message = '''Ниже вы можете увидеть полный перечень доступных команд,
                      для получения подробной информации по команде используй: /info_command '''

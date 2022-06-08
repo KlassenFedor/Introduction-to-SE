@@ -1,2 +1,2 @@
-async def set_defaults():
+async def main_command():
     pass

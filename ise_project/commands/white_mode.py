@@ -1,2 +1,2 @@
-async def set_white_mode(channel):
+async def main_command(channel):
     pass

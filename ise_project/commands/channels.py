@@ -1,2 +1,2 @@
-async def get_all_channels():
+async def main_command():
     pass

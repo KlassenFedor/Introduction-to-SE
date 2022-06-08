@@ -1,2 +1,2 @@
-async def add_ban_word(channel, ban_word, *hashtags):
+async def main_command(channel, ban_word, *hashtags):
     pass

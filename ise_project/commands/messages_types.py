@@ -1,2 +1,2 @@
-async def get_messages_types(channel):
+async def main_command(channel):
     pass

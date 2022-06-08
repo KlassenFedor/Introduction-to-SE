@@ -1,6 +1,7 @@
 from telethon.sync import TelegramClient, events
-from processing_commands import process_command
 import configparser
+import importlib
+
 
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -11,11 +12,12 @@ username = config['Telegram']['username']
 main_account = config['Telegram']['main_account']
 
 client = TelegramClient(username, int(api_id), api_hash)
+module = importlib.import_module('processing_commands')
 
 
 @client.on(events.NewMessage())
 async def event_handler(event):
-    await process_command(event.message)
+    await module.process_command(event.message)
 
 
 client.start()

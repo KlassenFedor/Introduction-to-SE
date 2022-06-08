@@ -1,2 +1,2 @@
-async def delete_channel(channel):
+async def main_command(channel):
     pass

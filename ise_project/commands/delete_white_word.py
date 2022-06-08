@@ -1,2 +1,2 @@
-async def delete_white_word(channel, white_word, *hashtags):
+async def main_command(channel, white_word, *hashtags):
     pass
