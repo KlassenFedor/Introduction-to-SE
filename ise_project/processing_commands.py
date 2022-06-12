@@ -1,5 +1,7 @@
 import importlib
 
+from main import client
+
 command = ''
 
 commands_list = '''/info /info_commands /info_command /channels /ban_words /messages_types 
@@ -9,9 +11,9 @@ commands_list = '''/info /info_commands /info_command /channels /ban_words /mess
 hashtags = '''-ht'''.split()
 
 
-async def call_command(current_command):
+async def call_command(current_command, tokens):
     module = importlib.import_module('commands.{}'.format(current_command))
-    await module.main_command()
+    await module.main_command(client, tokens)
 
 
 async def process_command(current_command):
@@ -25,110 +27,128 @@ async def process_command(current_command):
             # info commands
             if current_token == '/info':
                 if check_info(tokens):
-                    await call_command('info')
+                    await call_command('info', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/info_commands':
                 if check_info_commands(tokens):
-                    await call_command('info_commands')
+                    await call_command('info_commands', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/info_command':
                 if check_info_command(tokens):
-                    await call_command('info_command')
+                    await call_command('info_command', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/channels':
                 if check_channels(tokens):
-                    await call_command('channels')
+                    await call_command('channels', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/ban_words':
                 if check_ban_words(tokens):
-                    await call_command('ban_words')
+                    await call_command('ban_words', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             # channel commands
             if current_token == '/messages_types':
                 if check_messages_types(tokens):
-                    await call_command('messages_types')
+                    await call_command('messages_types', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/add_channel':
                 if check_is_channel_token_correct(tokens):
-                    await call_command('add_channel')
+                    await call_command('add_channel', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/delete_channel':
                 if check_is_channel_token_correct(tokens):
-                    await call_command('delete_channel')
+                    await call_command('delete_channel', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             # filtration commands
             if current_token == '/add_ban_word':
                 if check_channel_and_word_with_hashtag(tokens):
-                    await call_command('add_ban_word')
+                    await call_command('add_ban_word', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/delete_ban_word':
                 if check_channel_and_word_with_hashtag(tokens):
-                    await call_command('delete_ban_word')
+                    await call_command('delete_ban_word', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/add_type':
                 if check_channel_and_word(tokens):
-                    await call_command('add_type')
+                    await call_command('add_type', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/delete_type':
                 if check_channel_and_word(tokens):
-                    await call_command('delete_type')
+                    await call_command('delete_type', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/set_defaults':
                 if check_channel_and_word(tokens):
-                    await call_command('set_defaults')
+                    await call_command('set_defaults', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/clear_ban_list':
                 if check_channel_and_word(tokens):
-                    await call_command('clear_ban_list')
+                    await call_command('clear_ban_list', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/white_mode':
                 if check_channel_and_word(tokens):
-                    await call_command('white_mode')
+                    await call_command('white_mode', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/add_white_word':
                 if check_channel_and_word_with_hashtag(tokens):
-                    await call_command('add_white_word')
+                    await call_command('add_white_word', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
             if current_token == '/delete_white_word':
                 if check_channel_and_word_with_hashtag(tokens):
-                    await call_command('delete_white_word')
+                    await call_command('delete_white_word', tokens[1:])
                 else:
                     message = 'Incorrect command'
+                    await client.send_message(message)
 
         else:
             message = "This command doesn't exists"
+            await client.send_message(message)
 
 
 def check_hashtag(token):

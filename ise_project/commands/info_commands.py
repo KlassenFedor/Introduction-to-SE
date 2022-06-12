@@ -1,4 +1,4 @@
-async def main_command(client):
+async def main_command(client, tokens):
     message = '''Ниже вы можете увидеть полный перечень доступных команд,
                  для получения подробной информации по команде используй: /info_command 
                  

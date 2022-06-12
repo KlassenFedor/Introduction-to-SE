@@ -1,7 +1,7 @@
 from database import Channel
 
 
-async def main_command(client):
+async def main_command(client, tokens):
     channels = Channel.get()
     message = ''
 
