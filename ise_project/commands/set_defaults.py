@@ -1,2 +1,2 @@
-async def main_command():
+async def main_command(client, tokens):
     pass
