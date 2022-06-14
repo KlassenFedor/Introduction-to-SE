@@ -2,7 +2,6 @@ from telethon.sync import TelegramClient, events
 import configparser
 import importlib
 
-
 config = configparser.ConfigParser()
 config.read("config.ini")
 
