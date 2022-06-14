@@ -14,9 +14,20 @@ async def main_command(client, tokens):
     if channel_exists:
         try:
             await client(LeaveChannelRequest(tokens[0]))
+            await delete_entity_from_db(tokens[0], client)
         except Exception as e:
             message = 'Что-то пошло не так'
             if e == ChannelPrivateError:
                 await client.delete_dialog(tokens[0])
+                await delete_entity_from_db(tokens[0], client)
             else:
                 await client.send_message(message)
+
+
+async def delete_entity_from_db(channel_id, client):
+    try:
+        channel = Channel.get(Channel.channel_id == channel_id)
+        channel.delete_instance()
+    except Exception as e:
+        message = 'Что-то пошло не так'
+        await client.send_message(message)
