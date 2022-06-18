@@ -1,3 +1,5 @@
+import logging
+
 from telethon import utils
 from telethon.tl.functions.messages import ImportChatInviteRequest
 from telethon.tl.functions.channels import JoinChannelRequest
@@ -14,7 +16,7 @@ async def main_command(client, tokens):
                     await client(ImportChatInviteRequest(tokens[1].split('/')[-1]))
                     await add_entity_to_db(tokens[0], client)
                 except Exception as e:
-                    message = 'Что-то пошло не так'
+                    message = 'Не удалось присоединиться'
                     await client.send_message(message)
         await client(JoinChannelRequest(channel))
         await add_entity_to_db(tokens[0], client)
@@ -31,5 +33,4 @@ async def add_entity_to_db(entity, client):
         new_channel = Channel(channel_id=entity, name=channel_name)
         new_channel.Save()
     except Exception as e:
-        message = 'Что-то пошло не так'
-        await client.send_message(message)
+        logging.error('Не удалось добавить в базу данных ' + str(e))
