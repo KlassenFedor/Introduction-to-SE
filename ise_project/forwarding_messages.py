@@ -1,4 +1,6 @@
 from telethon.sync import events
+from telethon.tl.functions.messages import SearchRequest
+from telethon.tl.types import *
 
 from database import Channel, ChannelBanWord, BanWord, ChannelWhiteWord, WhiteWord, ChannelMessageType, MessageType
 from main import client, module, main_account
@@ -17,33 +19,70 @@ async def event_handler(event):
 
 
 async def check_if_the_sender_being_tracked(sender):
-    channels = Channel.get()
-    for channel in channels:
+    my_channels = Channel.get()
+    for channel in my_channels:
         if channel.channel_id == sender:
             return True
     return False
 
 
 async def get_message_types(message):
-    pass
+    filters = [InputMessagesFilterPhotos(),
+               InputMessagesFilterVideo(),
+               InputMessagesFilterDocument(),
+               InputMessagesFilterVoice(),
+               InputMessagesFilterUrl()]
+    types = []
+    all_types = ['photo', 'video', 'document', 'voice', 'url']
+    channel = await client.get_entity(message.chat_id)
+    message_id = message.id
+    counter = 0
+    for my_filter in filters:
+        result = client(SearchRequest(
+            peer=channel,
+            q='',
+            filter=my_filter,
+            min_date=None,
+            max_date=None,
+            offset_id=0,
+            add_offset=0,
+            limit=1,
+            max_id=message_id,
+            min_id=message_id,
+            hash=message.hash
+        ))
+        if len(result) == 1:
+            types.append(all_types[counter])
+    return types
 
 
 async def has_ban_words(message, ban_words):
-    pass
+    all_words = message.split()
+    for word in all_words:
+        if word in ban_words:
+            return True
+    return False
 
 
 async def has_white_words(message, white_words):
-    pass
+    all_words = message.split()
+    for word in all_words:
+        if word in white_words:
+            return True
+    return False
 
 
 async def has_message_types(types_in_message, channel_types):
-    pass
+    for type_in_message in types_in_message:
+        if type_in_message in channel_types:
+            return True
+    return False
 
 
 async def filtrate_message(message):
     sender = await client.get_entity(message.from_id.user_id)
     message_text = message.text
-    message_types_in_message = get_message_types(message)
+    message_types_in_message = await get_message_types(message)
 
     ban_words_ids = ChannelBanWord.get(ChannelBanWord.channel == sender)
     ban_words = []
